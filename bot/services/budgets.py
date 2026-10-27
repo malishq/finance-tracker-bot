@@ -59,17 +59,6 @@ def crossed_threshold(before: BudgetStatus, after: BudgetStatus) -> bool:
     return after.level != OK and after.level != before.level
 
 
-def budget_lines(statuses: Iterable[BudgetStatus], currency: str) -> List[str]:
-    lines = []
-    for status in statuses:
-        mark = {OK: "", WARNING: " ⚠️", EXCEEDED: " 🚨"}[status.level]
-        lines.append(
-            f"{status.category}{mark}\n{progress_bar(status.share)} {fmt_percent(status.share)} · "
-            f"{fmt_money(status.spent, currency)} из {fmt_money(status.limit, currency)}"
-        )
-    return lines
-
-
 def statuses_from(limits: Dict[str, int], spent: Dict[str, int]) -> List[BudgetStatus]:
     result = [budget_status(name, limit, spent.get(name, 0)) for name, limit in limits.items()]
     return sorted(result, key=lambda s: (-s.share, s.category))

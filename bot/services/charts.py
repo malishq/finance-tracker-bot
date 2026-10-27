@@ -162,11 +162,13 @@ def bars_by_day(points: Sequence[Tuple[date, int]], title: str, subtitle: str, c
     ax.text(
         len(points) - 0.3,
         average,
-        f"в среднем {fmt_money(round(average * 100), currency)} в день",
+        f"в среднем {fmt_money(round(average) * 100, currency)} в день",
         ha="right",
         va="bottom",
         fontsize=8.5,
         color=INK_SECONDARY,
+        bbox={"facecolor": SURFACE, "edgecolor": "none", "pad": 2},
+        zorder=6,
     )
     ax.set_ylim(0, max(values) * 1.22)
     _date_ticks(ax, dates)

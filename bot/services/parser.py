@@ -161,3 +161,13 @@ def parse_tz_offset(text: str) -> Optional[int]:
     if value < -12 or value > 14:
         return None
     return value
+
+
+def parse_date(text: str, today: date) -> Optional[date]:
+    word = text.strip().lower()
+    if word in WORD_DATES:
+        return today - timedelta(days=WORD_DATES[word])
+    match = re.fullmatch(r"\s*(\d{1,2})\.(\d{1,2})(?:\.(\d{2}|\d{4}))?\s*", text)
+    if not match:
+        return None
+    return _resolve_date(match, today)
