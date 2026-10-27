@@ -1,0 +1,16 @@
+[Unit]
+Description=Finance tracker Telegram bot
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=bot
+WorkingDirectory=/opt/finance-tracker-bot
+EnvironmentFile=/opt/finance-tracker-bot/.env
+ExecStart=/opt/finance-tracker-bot/.venv/bin/python main.py
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
